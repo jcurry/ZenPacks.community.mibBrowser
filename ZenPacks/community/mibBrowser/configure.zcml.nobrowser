@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+
+    <!-- Includes: Browser Configuration 
+    <include package=".browser"/>
+-->
+    <browser:resourceDirectory
+    	name="mibBrowser"
+        directory="browser/resources"
+        />
+
+      <!-- Add an item to the "gear" Action menu for a mib
+           Note the IHeadExtraManager in the manager field
+
+      -->
+
+      <browser:viewlet
+          name="device-gear-menu"
+          paths="/++resource++mibBrowser/js/mibGearMenu.js"
+          weight="9"
+          for="*"
+          manager="Products.ZenUI3.browser.interfaces.IHeadExtraManager"
+          class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+          permission="zope2.Public"
+          />
+
+
+    <!-- Add a command window for showing ouput for a command run from an action menu
+         The name parameter ties in with the "target" field in the js handler
+         In the class field, .. takes you back to the ZenPack base directory where
+         there must be a file called command.py..........
+         which contains a class called MyPredefinedCommandView
+    -->
+
+    <browser:page
+        name="run_my_mib_predefined_command"
+        for="*"
+        class="ZenPacks.community.mib_browser.command.MyMibPredefinedCommandView"
+        permission="zope2.Public"
+        />
+
+
+</configure>
+

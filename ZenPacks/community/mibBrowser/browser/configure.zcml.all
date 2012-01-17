@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/browser">
+
+    <!-- A resource directory contains static web content. -->
+    <!-- mib_browser is simply a unique name. The directory "resources" is directly under this directory -->
+    <!-- The name "mib_browser" in the resourceDirectory stanza must match what follows ++resource++ in viewlet -->
+
+    <resourceDirectory
+        name="mibBrowser"
+        directory="resources"
+        />
+
+
+
+      <!-- Add an item to the "gear" Action menu for a mib
+           Note the IHeadExtraManager in the manager field
+
+      -->
+
+      <viewlet
+          name="device-gear-menu"
+          paths="/++resource++mibBrowser/js/mibGearMenu.js"
+          weight="9"
+          for="*"
+          manager="Products.ZenUI3.browser.interfaces.IHeadExtraManager"
+          class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+          permission="zope2.Public"
+          />
+
+
+    <!-- Add a command window for showing ouput for a command run from an action menu
+         The name parameter ties in with the "target" field in the js handler
+         In the class field, .. takes you back to the ZenPack base directory where
+         there must be a file called command.py..........
+         which contains a class called MyPredefinedCommandView
+    -->
+
+    <page
+        name="run_my_mib_predefined_command"
+        for="*"
+        class="..command.MyMibPredefinedCommandView"
+        permission="zope2.Public"
+        />
+
+    <!-- Define a viewlet that puts up a new footer bar menu
+         The action is defined in myMibFooterMenu.js under the js subdir in the resources subdirectory
+         The weight field doesn't seem to change the position of this option on the
+         footer bar but don't set weight="1" or it doesn't show up at all
+    -->
+
+      <viewlet
+          name="js-myMibFooterMenu"
+          paths="/++resource++mibBrowser/js/myMibFooterMenu.js"
+          weight="4"
+          manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+          class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+          permission="zope2.Public"
+          />
+
+
+
+</configure>
+
+
